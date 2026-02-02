@@ -1,14 +1,23 @@
 import requests
 import re
+import sys
 
 JSON_URL = "https://pasteking.u0k.workers.dev/3qsxt.json"
 OUTPUT_M3U = "cricket.m3u"
 
-DEFAULT_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"
+DEFAULT_UA = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+    "AppleWebKit/537.36 (KHTML, like Gecko) "
+    "Chrome/143.0.0.0 Safari/537.36"
+)
 
-def parse_headers(url):
+def parse_headers(url: str) -> str:
+    """
+    Converts Android-incompatible headers into:
+    url|header=value|header=value
+    """
     if "|" not in url:
-        return url
+        return url + f"|user-agent={DEFAULT_UA}"
 
     base, headers = url.split("|", 1)
     headers = headers.lstrip("?&")
@@ -26,9 +35,17 @@ def parse_headers(url):
 
     return base + "|" + "|".join(clean_headers)
 
+
 def main():
-    r = requests.get(JSON_URL, timeout=15)
-    r.raise_for_status()
+    print(">>> Generator started")
+
+    try:
+        r = requests.get(JSON_URL, timeout=20)
+        r.raise_for_status()
+    except Exception as e:
+        print("❌ JSON fetch failed:", e)
+        sys.exit(1)
+
     data = r.json()
 
     event = data.get("event", {})
@@ -37,13 +54,20 @@ def main():
 
     streams = data.get("streams", [])
 
+    if not streams:
+        print("❌ No streams found in JSON")
+        sys.exit(1)
+
     with open(OUTPUT_M3U, "w", encoding="utf-8") as f:
-        f.write("#EXTM3U\n")
+        f.write("#EXTM3U\n\n")
 
         for s in streams:
             language = s.get("language", "Unknown")
             provider = s.get("provider", "Live")
-            url = s.get("url", "")
+            url = s.get("url", "").strip()
+
+            if not url:
+                continue
 
             final_url = parse_headers(url)
 
@@ -55,6 +79,9 @@ def main():
                 f'group-title="{group}",{name}\n'
             )
             f.write(final_url + "\n\n")
+
+    print(">>> cricket.m3u generated successfully")
+
 
 if __name__ == "__main__":
     main()
