@@ -5,6 +5,8 @@ import sys
 JSON_URL = "https://pasteking.u0k.workers.dev/3qsxt.json"
 OUTPUT_M3U = "cricket.m3u"
 
+DEFAULT_GROUP = "𝐂𝐫𝐢𝐜𝐤𝐞𝐭"
+
 DEFAULT_UA = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
     "AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -12,10 +14,6 @@ DEFAULT_UA = (
 )
 
 def parse_headers(url: str) -> str:
-    """
-    Converts Android-incompatible headers into:
-    url|header=value|header=value
-    """
     if "|" not in url:
         return url + f"|user-agent={DEFAULT_UA}"
 
@@ -49,21 +47,19 @@ def main():
     data = r.json()
 
     event = data.get("event", {})
-    title = event.get("short_title", "Live Cricket")
-    sport = event.get("sport", "Cricket")
+    match_type = event.get("match_type", "LIVE")
 
     streams = data.get("streams", [])
 
     if not streams:
-        print("❌ No streams found in JSON")
+        print("❌ No streams found")
         sys.exit(1)
 
     with open(OUTPUT_M3U, "w", encoding="utf-8") as f:
         f.write("#EXTM3U\n\n")
 
         for s in streams:
-            language = s.get("language", "Unknown")
-            provider = s.get("provider", "Live")
+            language = s.get("language", "Unknown").replace("✨", "").strip()
             url = s.get("url", "").strip()
 
             if not url:
@@ -71,12 +67,12 @@ def main():
 
             final_url = parse_headers(url)
 
-            name = f"{title} [{language}]"
-            group = f"{sport} | {provider}"
+            # 🔥 Dynamic channel name
+            channel_name = f"{match_type} - {language}"
 
             f.write(
-                f'#EXTINF:-1 tvg-name="{name}" '
-                f'group-title="{group}",{name}\n'
+                f'#EXTINF:-1 tvg-name="{channel_name}" '
+                f'group-title="{DEFAULT_GROUP}",{channel_name}\n'
             )
             f.write(final_url + "\n\n")
 
