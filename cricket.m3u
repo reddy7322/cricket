@@ -1,22 +1,22 @@
 #EXTM3U
-# Last Updated : 3rd Feb 2026 | 11:33:59 AM
+# Last Updated : 3rd Feb 2026 | 11:39:35 AM
 # Powered By @tvtelugu
 
-#EXTINF:-1 tvg-name="T20I - English" group-title="𝐂𝐫𝐢𝐜𝐤𝐞𝐭",T20I - English
+#EXTINF:-1 tvg-name="T20I - English" tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="𝐂𝐫𝐢𝐜𝐤𝐞𝐭" group-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png",T20I - English
 https://c2ag.short.gy/n/english.m3u8?|User-agent=null
 
-#EXTINF:-1 tvg-name="T20I - Hot|Hindi" group-title="𝐂𝐫𝐢𝐜𝐤𝐞𝐭",T20I - Hot|Hindi
+#EXTINF:-1 tvg-name="T20I - Hot|Hindi" tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="𝐂𝐫𝐢𝐜𝐤𝐞𝐭" group-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png",T20I - Hot|Hindi
 https://dillzyserver.dillzycreations.workers.dev/live/hotstar.m3u8|referer=https://allrounderlive.pages.dev|origin=https://allrounderlive.pages.dev|user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36
 
-#EXTINF:-1 tvg-name="T20I - Hindi" group-title="𝐂𝐫𝐢𝐜𝐤𝐞𝐭",T20I - Hindi
+#EXTINF:-1 tvg-name="T20I - Hindi" tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="𝐂𝐫𝐢𝐜𝐤𝐞𝐭" group-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png",T20I - Hindi
 https://c2ag.short.gy/n/hin.m3u8?|User-agent=null
 
-#EXTINF:-1 tvg-name="T20I - Tamil" group-title="𝐂𝐫𝐢𝐜𝐤𝐞𝐭",T20I - Tamil
+#EXTINF:-1 tvg-name="T20I - Tamil" tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="𝐂𝐫𝐢𝐜𝐤𝐞𝐭" group-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png",T20I - Tamil
 https://c2ag.short.gy/n/tamil.m3u8?|User-agent=null
 
-#EXTINF:-1 tvg-name="T20I - Telugu" group-title="𝐂𝐫𝐢𝐜𝐤𝐞𝐭",T20I - Telugu
+#EXTINF:-1 tvg-name="T20I - Telugu" tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="𝐂𝐫𝐢𝐜𝐤𝐞𝐭" group-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png",T20I - Telugu
 https://c2ag.short.gy/n/telugu.m3u8?|User-agent=null
 
-#EXTINF:-1 tvg-name="T20I - Kannada" group-title="𝐂𝐫𝐢𝐜𝐤𝐞𝐭",T20I - Kannada
+#EXTINF:-1 tvg-name="T20I - Kannada" tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="𝐂𝐫𝐢𝐜𝐤𝐞𝐭" group-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png",T20I - Kannada
 https://c2ag.short.gy/n/kan.m3u8?|User-agent=null
 
