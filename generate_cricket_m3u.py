@@ -9,6 +9,9 @@ OUTPUT_M3U = "cricket.m3u"
 DEFAULT_GROUP = "𝐂𝐫𝐢𝐜𝐤𝐞𝐭"
 POWERED_BY = "Powered By @tvtelugu"
 
+DEFAULT_LOGO = "https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png"
+GROUP_LOGO = DEFAULT_LOGO
+
 DEFAULT_UA = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
     "AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -23,8 +26,7 @@ def ordinal(n):
 def ist_timestamp():
     ist = timezone(timedelta(hours=5, minutes=30))
     now = datetime.now(ist)
-    day = ordinal(now.day)
-    return now.strftime(f"{day} %b %Y | %I:%M:%S %p")
+    return now.strftime(f"{ordinal(now.day)} %b %Y | %I:%M:%S %p")
 
 def parse_headers(url: str) -> str:
     if "|" not in url:
@@ -62,7 +64,6 @@ def main():
     match_type = event.get("match_type", "LIVE")
 
     streams = data.get("streams", [])
-
     if not streams:
         print("❌ No streams found")
         sys.exit(1)
@@ -77,17 +78,19 @@ def main():
         for s in streams:
             language = s.get("language", "Unknown").replace("✨", "").strip()
             url = s.get("url", "").strip()
-
             if not url:
                 continue
 
             final_url = parse_headers(url)
-
             channel_name = f"{match_type} - {language}"
 
             f.write(
-                f'#EXTINF:-1 tvg-name="{channel_name}" '
-                f'group-title="{DEFAULT_GROUP}",{channel_name}\n'
+                f'#EXTINF:-1 '
+                f'tvg-name="{channel_name}" '
+                f'tvg-logo="{DEFAULT_LOGO}" '
+                f'group-title="{DEFAULT_GROUP}" '
+                f'group-logo="{GROUP_LOGO}",'
+                f'{channel_name}\n'
             )
             f.write(final_url + "\n\n")
 
