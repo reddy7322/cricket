@@ -1,22 +1,28 @@
 #EXTM3U
-# Last Updated : 6th Feb 2026 | 01:58:38 PM
+# Last Updated : 6th Feb 2026 | 02:38:35 PM
 # Powered By @tvtelugu
 
-#EXTINF:-1 tvg-name="T20I - English" tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="𝐂𝐫𝐢𝐜𝐤𝐞𝐭" group-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png",T20I - English
-https://c2ag.short.gy/n/english.m3u8?|User-agent=null
+#EXTINF:-1 tvg-name="LIVE - English" tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="𝐂𝐫𝐢𝐜𝐤𝐞𝐭" group-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png",LIVE - English
+https://otte.live.fly.ww.aiv-cdn.net/iad-nitro/live/clients/dash/enc/kbndcj80tn/out/v1/31fc126027704d56bd0e09134a19085a/cenc.mpd?%7CdrmScheme=clearkey&drmLicense=3d7a73de8c41b3ba9125a6544e5f89bf:8f93b0a810e89801ef8fa1fbb4cd59d2|user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36
 
-#EXTINF:-1 tvg-name="T20I - Hot|Hindi" tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="𝐂𝐫𝐢𝐜𝐤𝐞𝐭" group-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png",T20I - Hot|Hindi
-https://dillzyserver.dillzycreations.workers.dev/live/hotstar.m3u8|referer=https://allrounderlive.pages.dev|origin=https://allrounderlive.pages.dev|user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36
+#EXTINF:-1 tvg-name="LIVE - English" tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="𝐂𝐫𝐢𝐜𝐤𝐞𝐭" group-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png",LIVE - English
+https://livem-d-02-icc-ne.akamaized.net/variant/v1/dai-event-prd-pal-west/vcg-01-d/DASH_DASH/Live/channel(vcg-01-ch-hd-02)/manifest.mpd?vcfilter=ab179ffc-6dbd-4cdc-bc0c-a31e13745497|drmScheme=clearkey|drmLicense=ae7076b647133606b704d33e4cef5134:810251515584cf71216d9a2d1ebf04bb|user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36
 
-#EXTINF:-1 tvg-name="T20I - Hindi" tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="𝐂𝐫𝐢𝐜𝐤𝐞𝐭" group-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png",T20I - Hindi
-https://c2ag.short.gy/n/hin.m3u8?|User-agent=null
+#EXTINF:-1 tvg-name="LIVE - English" tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="𝐂𝐫𝐢𝐜𝐤𝐞𝐭" group-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png",LIVE - English
+https://otte.live.fly.ww.aiv-cdn.net/iad-nitro/live/dash/enc/att545vfjr/out/v1/450d606c6a17471f84d09372f55004e2/cenc.mpd?%7CdrmScheme=clearkey&drmLicense=f159241d40e659d58e81bc17ca30da31:6b7fe24f7a16343bd447b0b30f68b7b2|user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36
 
-#EXTINF:-1 tvg-name="T20I - Tamil" tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="𝐂𝐫𝐢𝐜𝐤𝐞𝐭" group-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png",T20I - Tamil
-https://c2ag.short.gy/n/tamil.m3u8?|User-agent=null
+#EXTINF:-1 tvg-name="LIVE - English" tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="𝐂𝐫𝐢𝐜𝐤𝐞𝐭" group-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png",LIVE - English
+https://livetv-push.hotstar.com/dash/live/2002464/sshd1livetvwv/master.mpd?|Cookie=hdntl=exp=1770449171~acl=*sshd1livetv*~id=3416848d7efb9a2e17d3ea747f78f85e~data=hdntl~hmac=3b4d21b3e210bc18683bbfa25109bfe775ed9ae5968e64f068c8dd58f92e4683|User-agent=Hotstar;in.startv.hotstar/25.02.24.8.11169%20(Android/15)|Origin=https://www.hotstar.com|Referer=https://www.hotstar.com/|drmScheme=clearkey|drmLicense=fe7718fbb3fb4ba78c07cc0f578744e6:624e24b1843b459fab0a949609416f0d
 
-#EXTINF:-1 tvg-name="T20I - Telugu" tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="𝐂𝐫𝐢𝐜𝐤𝐞𝐭" group-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png",T20I - Telugu
-https://c2ag.short.gy/n/telugu.m3u8?|User-agent=null
+#EXTINF:-1 tvg-name="LIVE - Hindi" tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="𝐂𝐫𝐢𝐜𝐤𝐞𝐭" group-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png",LIVE - Hindi
+https://jcevents.hotstar.com/bpk-tv/f0e3e64ae415771d8e460317ce97aa5e/Fallback/index2.m3u8?|Cookie=hdntl=exp=1770448717~acl=%2f*~id=f6c28565bcfb944e56ce79c0ce896718~data=hdntl~hmac=91c3e86e272c1bd6032e0e5540a718b9124f8d75bc3f982118c49d47a62e7200|Origin=https://www.hotstar.com|Referer=https://www.hotstar.com/|User-agent=Hotstar;in.startv.hotstar/25.02.24.8.11169%20(Android/15)
 
-#EXTINF:-1 tvg-name="T20I - Kannada" tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="𝐂𝐫𝐢𝐜𝐤𝐞𝐭" group-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png",T20I - Kannada
-https://c2ag.short.gy/n/kan.m3u8?|User-agent=null
+#EXTINF:-1 tvg-name="LIVE - Hindi" tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="𝐂𝐫𝐢𝐜𝐤𝐞𝐭" group-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png",LIVE - Hindi
+https://jcevents.hotstar.com/bpk-tv/2c7182c8e6a22cfa6ebc02bbc9ed6dd0/Fallback/index2.m3u8?|Cookie=hdntl=exp=1770448717~acl=%2f*~id=f6c28565bcfb944e56ce79c0ce896718~data=hdntl~hmac=91c3e86e272c1bd6032e0e5540a718b9124f8d75bc3f982118c49d47a62e7200|Origin=https://www.hotstar.com|Referer=https://www.hotstar.com/|User-agent=Hotstar;in.startv.hotstar/25.02.24.8.11169%20(Android/15)
+
+#EXTINF:-1 tvg-name="LIVE - Tamil" tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="𝐂𝐫𝐢𝐜𝐤𝐞𝐭" group-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png",LIVE - Tamil
+https://jcevents.hotstar.com/bpk-tv/4db6f833701e78ae4443cb268020f03b/Fallback/index2.m3u8?|Cookie=hdntl=exp=1770448717~acl=%2f*~id=f6c28565bcfb944e56ce79c0ce896718~data=hdntl~hmac=91c3e86e272c1bd6032e0e5540a718b9124f8d75bc3f982118c49d47a62e7200|Origin=https://www.hotstar.com|Referer=https://www.hotstar.com/|User-agent=Hotstar;in.startv.hotstar/25.02.24.8.11169%20(Android/15)
+
+#EXTINF:-1 tvg-name="LIVE - Telugu" tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="𝐂𝐫𝐢𝐜𝐤𝐞𝐭" group-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png",LIVE - Telugu
+https://jcevents.hotstar.com/bpk-tv/034d1fb94cae87294a06f4dc266084b9/Fallback/index2.m3u8?|Cookie=hdntl=exp=1770448717~acl=%2f*~id=f6c28565bcfb944e56ce79c0ce896718~data=hdntl~hmac=91c3e86e272c1bd6032e0e5540a718b9124f8d75bc3f982118c49d47a62e7200|Origin=https://www.hotstar.com|Referer=https://www.hotstar.com/|User-agent=Hotstar;in.startv.hotstar/25.02.24.8.11169%20(Android/15)
 
