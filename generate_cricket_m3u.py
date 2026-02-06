@@ -3,7 +3,7 @@ import re
 import sys
 from datetime import datetime, timedelta, timezone
 
-JSON_URL = "https://pasteking.u0k.workers.dev/3qsxt.json"
+JSON_URL = "https://pasteking.u0k.workers.dev/3qsxt.json" 
 OUTPUT_M3U = "cricket.m3u"
 
 DEFAULT_GROUP = "𝐂𝐫𝐢𝐜𝐤𝐞𝐭"
