@@ -2,8 +2,8 @@ name: Auto Update Cricket Playlist
 
 on:
   schedule:
-    - cron: "*/15 * * * *"   # Every 15 minutes
-  workflow_dispatch:
+    - cron: "*/15 * * * *"   # Runs every 15 minutes
+  workflow_dispatch:         # Allows manual run
 
 permissions:
   contents: write
@@ -31,9 +31,21 @@ jobs:
           echo "==== FILE LIST ===="
           ls -lah
           echo "==== cricket.m3u CONTENT ===="
-          cat cricket.m3u
+          head -n 20 cricket.m3u # Shows first 20 lines for safety
 
       - name: Commit & Push if changed
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+
+          git add cricket.m3u
+
+          if git diff --cached --quiet; then
+            echo "No changes detected"
+          else
+            git commit -m "Auto update cricket.m3u ($(date -u))"
+            git push
+          fi
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
