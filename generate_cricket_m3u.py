@@ -20,8 +20,17 @@ def ist_timestamp():
     now = datetime.now(ist)
     return now.strftime("%d %b %Y | %I:%M:%S %p")
 
+def is_working(url):
+    """Checks if the stream URL is reachable."""
+    try:
+        # We use a HEAD request to be fast, but some servers require GET
+        response = requests.head(url, timeout=5, headers={"User-Agent": DEFAULT_UA})
+        return response.status_code < 400
+    except:
+        return False
+
 def main():
-    print(">>> Generator started")
+    print(">>> Generator started: Fetching working streams only")
     all_streams_found = []
 
     for url in JSON_URLS:
@@ -37,15 +46,16 @@ def main():
             for s in streams:
                 s['match_type_label'] = match_type
                 all_streams_found.append(s)
-            print(f"✅ Fetched {len(streams)} streams from {url}")
+            print(f"✅ Loaded data from {url}")
         except Exception as e:
             print(f"❌ Failed to fetch {url}: {e}")
 
     if not all_streams_found:
-        print("❌ No streams found.")
+        print("❌ No data found.")
         sys.exit(1)
 
     timestamp = ist_timestamp()
+    working_count = 0
 
     with open(OUTPUT_M3U, "w", encoding="utf-8") as f:
         f.write("#EXTM3U\n")
@@ -60,10 +70,14 @@ def main():
             if not url_raw:
                 continue
 
-            # Standardizing parts
             parts = url_raw.split('|')
             base_url = parts[0]
             
+            # --- STATUS CHECK ---
+            if not is_working(base_url):
+                print(f"⚠️ Skipping dead stream: {language}")
+                continue
+
             params = {}
             if len(parts) > 1:
                 param_section = parts[1].replace('|', '&')
@@ -74,30 +88,23 @@ def main():
                         params[k.strip()] = v.strip()
 
             channel_name = f"{match_type} - {language}"
-
             f.write(f'#EXTINF:-1 tvg-name="{channel_name}" tvg-logo="{DEFAULT_LOGO}" group-title="{DEFAULT_GROUP}",{channel_name}\n')
 
-            # DRM for TiviMate
             drm_key = params.get("drmLicense") or params.get("license_key")
             if drm_key:
                 f.write("#KODIPROP:inputstream.adaptive.license_type=clearkey\n")
                 f.write(f"#KODIPROP:inputstream.adaptive.license_key={drm_key}\n")
 
-            # Headers for OTT Navigator
-            headers = {
-                "User-Agent": params.get("User-Agent") or params.get("user-agent") or DEFAULT_UA
-            }
+            headers = {"User-Agent": params.get("User-Agent") or params.get("user-agent") or DEFAULT_UA}
             if "Cookie" in params:
                 headers["Cookie"] = params["Cookie"]
-            if "Origin" in params:
-                headers["Origin"] = params["Origin"]
-            if "Referer" in params:
-                headers["Referer"] = params["Referer"]
             
             f.write(f"#EXTHTTP:{json.dumps(headers)}\n")
             f.write(base_url + "\n\n")
+            working_count += 1
 
-    print(f">>> {OUTPUT_M3U} generated successfully")
+    print(f">>> {OUTPUT_M3U} generated with {working_count} working streams.")
 
 if __name__ == "__main__":
     main()
+    
