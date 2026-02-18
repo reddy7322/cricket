@@ -76,6 +76,43 @@ def main():
 
             f.write(f'#EXTINF:-1 tvg-name="{channel_name}" tvg-logo="{DEFAULT_LOGO}" group-title="{DEFAULT_GROUP}",{channel_name}\n')
 
+            # DRM for TiviMate
+            drm_key = params.get("drmLicense") or params.get("license_key")
+            if drm_key:
+                f.write("#KODIPROP:inputstream.adaptive.license_type=clearkey\n")
+                f.write(f"#KODIPROP:inputstream.adaptive.license_key={drm_key}\n")
+
+            # Headers for OTT Navigator
+            headers = {
+                "User-Agent": params.get("User-Agent") or params.get("user-agent") or DEFAULT_UA
+            }
+            if "Cookie" in params: headers["Cookie"] = params["Cookie"]
+            if "Origin" in params: headers["Origin"] = params["Origin"]
+            if "Referer" in params: headers["Referer"] = params["Referer"]
+            
+            f.write(f"#EXTHTTP:{json.dumps(headers)}\n")
+            f.write(base_url + "\n\n")
+
+    print(f">>> {OUTPUT_M3U} generated successfully")
+
+if __name__ == "__main__":
+    main()
+            parts = url_raw.split('|')
+            base_url = parts[0]
+            
+            params = {}
+            if len(parts) > 1:
+                param_section = parts[1].replace('|', '&')
+                pairs = param_section.split('&')
+                for pair in pairs:
+                    if '=' in pair:
+                        k, v = pair.split('=', 1)
+                        params[k.strip()] = v.strip()
+
+            channel_name = f"{match_type} - {language}"
+
+            f.write(f'#EXTINF:-1 tvg-name="{channel_name}" tvg-logo="{DEFAULT_LOGO}" group-title="{DEFAULT_GROUP}",{channel_name}\n')
+
             # DRM Setup for Professional Players
             drm_key = params.get("drmLicense") or params.get("license_key")
             if drm_key:
