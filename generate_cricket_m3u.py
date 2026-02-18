@@ -1,6 +1,7 @@
 import requests
 import json
 import sys
+import os
 from datetime import datetime, timedelta, timezone
 
 # --- CONFIGURATION ---
@@ -9,75 +10,74 @@ JSON_URLS = [
     "https://sports.vodep39240327.workers.dev/sports.json"
 ]
 OUTPUT_M3U = "cricket.m3u"
-
-DEFAULT_GROUP = "𝐂𝐫𝐢𝐜𝐤𝐞𝐭"
-POWERED_BY = "Powered By @tvtelugu"
-DEFAULT_LOGO = "https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png"
 DEFAULT_UA = "plaYtv/7.1.3 (Linux;Android 13) ExoPlayerLib/824.0"
+
+# --- TELEGRAM CREDENTIALS ---
+BOT_TOKEN = "8599332115:AAEfXEqZ2B9KWr0OuksXCgDiLJFeD_TlJEg"
+CHAT_ID = "959113182"
 
 def ist_timestamp():
     ist = timezone(timedelta(hours=5, minutes=30))
     now = datetime.now(ist)
     return now.strftime("%d %b %Y | %I:%M:%S %p")
 
-def is_working(url):
-    """Checks if the stream URL is reachable."""
+def send_telegram_msg(message):
+    url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
+    payload = {"chat_id": CHAT_ID, "text": message, "parse_mode": "HTML"}
     try:
-        # We use a HEAD request to be fast, but some servers require GET
-        response = requests.head(url, timeout=5, headers={"User-Agent": DEFAULT_UA})
-        return response.status_code < 400
+        requests.post(url, json=payload, timeout=10)
+    except Exception as e:
+        print(f"❌ Telegram Error: {e}")
+
+def is_working(url):
+    """Verifies if the stream is active without downloading the whole file."""
+    try:
+        response = requests.get(url, timeout=7, headers={"User-Agent": DEFAULT_UA}, stream=True)
+        return response.status_code == 200
     except:
         return False
 
 def main():
-    print(">>> Generator started: Fetching working streams only")
-    all_streams_found = []
+    print(">>> Starting Cricket Playlist Update...")
+    all_streams = []
+    seen_urls = set()
 
     for url in JSON_URLS:
         try:
             r = requests.get(url, timeout=20)
             r.raise_for_status()
             data = r.json()
-            
-            event = data.get("event", {})
-            match_type = event.get("match_type", "LIVE")
-            streams = data.get("streams", [])
-            
-            for s in streams:
-                s['match_type_label'] = match_type
-                all_streams_found.append(s)
-            print(f"✅ Loaded data from {url}")
+            m_type = data.get("event", {}).get("match_type", "LIVE")
+            for s in data.get("streams", []):
+                s['m_label'] = m_type
+                all_streams.append(s)
         except Exception as e:
-            print(f"❌ Failed to fetch {url}: {e}")
+            print(f"❌ Source Error: {e}")
 
-    if not all_streams_found:
-        print("❌ No data found.")
-        sys.exit(1)
-
-    timestamp = ist_timestamp()
     working_count = 0
-
     with open(OUTPUT_M3U, "w", encoding="utf-8") as f:
         f.write("#EXTM3U\n")
-        f.write(f"# Last Updated : {timestamp} (IST)\n")
-        f.write(f"# {POWERED_BY}\n\n")
+        f.write(f"# Updated: {ist_timestamp()}\n\n")
 
-        for s in all_streams_found:
-            language = s.get("language", "Unknown").replace("✨", "").strip()
+        for s in all_streams:
             url_raw = s.get("url", "").strip()
-            match_type = s.get("match_type_label", "LIVE")
-            
             if not url_raw:
                 continue
 
             parts = url_raw.split('|')
             base_url = parts[0]
-            
-            # --- STATUS CHECK ---
-            if not is_working(base_url):
-                print(f"⚠️ Skipping dead stream: {language}")
+
+            # Remove duplicates
+            if base_url in seen_urls:
                 continue
 
+            # Validate working status
+            if not is_working(base_url):
+                continue
+
+            seen_urls.add(base_url)
+
+            # Parse DRM and Headers
             params = {}
             if len(parts) > 1:
                 param_section = parts[1].replace('|', '&')
@@ -87,23 +87,27 @@ def main():
                         k, v = pair.split('=', 1)
                         params[k.strip()] = v.strip()
 
-            channel_name = f"{match_type} - {language}"
-            f.write(f'#EXTINF:-1 tvg-name="{channel_name}" tvg-logo="{DEFAULT_LOGO}" group-title="{DEFAULT_GROUP}",{channel_name}\n')
-
-            drm_key = params.get("drmLicense") or params.get("license_key")
-            if drm_key:
-                f.write("#KODIPROP:inputstream.adaptive.license_type=clearkey\n")
-                f.write(f"#KODIPROP:inputstream.adaptive.license_key={drm_key}\n")
-
-            headers = {"User-Agent": params.get("User-Agent") or params.get("user-agent") or DEFAULT_UA}
-            if "Cookie" in params:
-                headers["Cookie"] = params["Cookie"]
+            lang = s.get("language", "Unknown").replace("✨", "").strip()
+            name = f"{s['m_label']} - {lang}"
             
-            f.write(f"#EXTHTTP:{json.dumps(headers)}\n")
-            f.write(base_url + "\n\n")
+            f.write(f'#EXTINF:-1 tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="Cricket",{name}\n')
+
+            drm = params.get("drmLicense") or params.get("license_key")
+            if drm:
+                f.write("#KODIPROP:inputstream.adaptive.license_type=clearkey\n")
+                f.write(f"#KODIPROP:inputstream.adaptive.license_key={drm}\n")
+
+            f.write(f'#EXTHTTP:{{"User-Agent":"{DEFAULT_UA}"}}\n')
+            f.write(f"{base_url}\n\n")
             working_count += 1
 
-    print(f">>> {OUTPUT_M3U} generated with {working_count} working streams.")
+    # Send Notification to @TvtCricBot
+    msg = (f"🏏 <b>Cricket Playlist Updated!</b>\n\n"
+           f"✅ <b>{working_count}</b> Streams Verified\n"
+           f"🕒 Time: <code>{ist_timestamp()}</code>\n"
+           f"📂 Status: All working & Unique")
+    send_telegram_msg(msg)
+    print(f">>> Success! {working_count} streams added.")
 
 if __name__ == "__main__":
     main()
