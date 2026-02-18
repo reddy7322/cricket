@@ -1,100 +1,103 @@
 import requests
-import re
+import json
 import sys
 from datetime import datetime, timedelta, timezone
 
-JSON_URL = "https://pasteking.u0k.workers.dev/xzdzw.json" 
-OUTPUT_M3U = "cricket.m3u"
+# --- CONFIGURATION ---
+JSON_URLS = [
+    "https://pasteking.u0k.workers.dev/xzdzw.json",
+    "https://sports.vodep39240327.workers.dev/sports.json"
+]
+OUTPUT_M3U = "cricket_pro.m3u"
 
 DEFAULT_GROUP = "𝐂𝐫𝐢𝐜𝐤𝐞𝐭"
 POWERED_BY = "Powered By @tvtelugu"
-
 DEFAULT_LOGO = "https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png"
-GROUP_LOGO = DEFAULT_LOGO
-
-DEFAULT_UA = (
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-    "AppleWebKit/537.36 (KHTML, like Gecko) "
-    "Chrome/143.0.0.0 Safari/537.36"
-)
-
-def ordinal(n):
-    if 11 <= n <= 13:
-        return f"{n}th"
-    return f"{n}{['th','st','nd','rd','th','th','th','th','th','th'][n % 10]}"
+DEFAULT_UA = "plaYtv/7.1.3 (Linux;Android 13) ExoPlayerLib/824.0"
 
 def ist_timestamp():
     ist = timezone(timedelta(hours=5, minutes=30))
     now = datetime.now(ist)
-    return now.strftime(f"{ordinal(now.day)} %b %Y | %I:%M:%S %p")
+    return now.strftime("%d %b %Y | %I:%M:%S %p")
 
-def parse_headers(url: str) -> str:
-    if "|" not in url:
-        return url + f"|user-agent={DEFAULT_UA}"
+def process_stream(stream, match_type):
+    url_raw = stream.get("url", "").strip()
+    if not url_raw:
+        return None
 
-    base, headers = url.split("|", 1)
-    headers = headers.lstrip("?&")
+    # Handle the pipe format used in some workers
+    parts = url_raw.split('|')
+    base_url = parts[0]
+    
+    # Extract params into a dictionary
+    params = {}
+    if len(parts) > 1:
+        param_pairs = parts[1].split('&')
+        for pair in param_pairs:
+            if '=' in pair:
+                k, v = pair.split('=', 1)
+                params[k] = v
 
-    parts = re.split(r"[&|]", headers)
-    clean_headers = []
-
-    for part in parts:
-        if "=" in part:
-            k, v = part.split("=", 1)
-            clean_headers.append(f"{k.strip()}={v.strip()}")
-
-    if not any(h.lower().startswith("user-agent=") for h in clean_headers):
-        clean_headers.append(f"user-agent={DEFAULT_UA}")
-
-    return base + "|" + "|".join(clean_headers)
+    language = stream.get("language", "Unknown").replace("✨", "").strip()
+    channel_name = f"{match_type} - {language}"
+    
+    # 1. Start writing the entry
+    entry = f'#EXTINF:-1 tvg-name="{channel_name}" tvg-logo="{DEFAULT_LOGO}" group-title="{DEFAULT_GROUP}",{channel_name}\n'
+    
+    # 2. Add DRM properties for TiviMate/OTT Navigator
+    drm_license = params.get("drmLicense") or params.get("license_key")
+    if drm_license:
+        entry += f'#KODIPROP:inputstream.adaptive.license_type=clearkey\n'
+        entry += f'#KODIPROP:inputstream.adaptive.license_key={drm_license}\n'
+    
+    # 3. Add Headers via #EXTHTTP (Best for TiviMate)
+    headers = {
+        "User-Agent": params.get("User-Agent") or params.get("user-agent") or DEFAULT_UA
+    }
+    if params.get("Cookie"): headers["Cookie"] = params.get("Cookie")
+    if params.get("Origin"): headers["Origin"] = params.get("Origin")
+    if params.get("Referer"): headers["Referer"] = params.get("Referer")
+    
+    entry += f'#EXTHTTP:{json.dumps(headers)}\n'
+    
+    # 4. Final URL
+    entry += f'{base_url}\n'
+    return entry
 
 def main():
-    print(">>> Generator started")
+    print(">>> Starting Pro IPTV Generator")
+    all_entries = []
 
-    try:
-        r = requests.get(JSON_URL, timeout=20)
-        r.raise_for_status()
-    except Exception as e:
-        print("❌ JSON fetch failed:", e)
+    for url in JSON_URLS:
+        try:
+            r = requests.get(url, timeout=20)
+            r.raise_for_status()
+            data = r.json()
+            
+            event = data.get("event", {})
+            match_type = event.get("match_type", "LIVE")
+            streams = data.get("streams", [])
+            
+            for s in streams:
+                entry = process_stream(s, match_type)
+                if entry:
+                    all_entries.append(entry)
+            print(f"✅ Fetched {len(streams)} streams from: {url}")
+        except Exception as e:
+            print(f"❌ Failed to fetch {url}: {e}")
+
+    if not all_entries:
+        print("❌ No streams found. Exiting.")
         sys.exit(1)
-
-    data = r.json()
-
-    event = data.get("event", {})
-    match_type = event.get("match_type", "LIVE")
-
-    streams = data.get("streams", [])
-    if not streams:
-        print("❌ No streams found")
-        sys.exit(1)
-
-    timestamp = ist_timestamp()
 
     with open(OUTPUT_M3U, "w", encoding="utf-8") as f:
         f.write("#EXTM3U\n")
-        f.write(f"# Last Updated : {timestamp}\n")
+        f.write(f"# Generated: {ist_timestamp()}\n")
         f.write(f"# {POWERED_BY}\n\n")
+        for entry in all_entries:
+            f.write(entry + "\n")
 
-        for s in streams:
-            language = s.get("language", "Unknown").replace("✨", "").strip()
-            url = s.get("url", "").strip()
-            if not url:
-                continue
-
-            final_url = parse_headers(url)
-            channel_name = f"{match_type} - {language}"
-
-            f.write(
-                f'#EXTINF:-1 '
-                f'tvg-name="{channel_name}" '
-                f'tvg-logo="{DEFAULT_LOGO}" '
-                f'group-title="{DEFAULT_GROUP}" '
-                f'group-logo="{GROUP_LOGO}",'
-                f'{channel_name}\n'
-            )
-            f.write(final_url + "\n\n")
-
-    print(">>> cricket.m3u generated successfully")
+    print(f"\n>>> Success! '{OUTPUT_M3U}' generated with {len(all_entries)} channels.")
 
 if __name__ == "__main__":
     main()
