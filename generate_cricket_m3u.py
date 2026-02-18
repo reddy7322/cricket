@@ -19,7 +19,7 @@ DEFAULT_UA = "plaYtv/7.1.3 (Linux;Android 13) ygx/824.1 ExoPlayerLib/824.0"
 # --- TELEGRAM CREDENTIALS ---
 BOT_TOKEN = "8267675444:AAEchiYEjLOeSzxE47jKdbgj_qKJfOq7k2I"
 # Sending to both: Personal ID and Group ID
-TARGET_IDS = ["959113182", "-1002428994434"]
+TARGET_IDS = ["959113182"]
 
 def ist_timestamp():
     ist = timezone(timedelta(hours=5, minutes=30))
