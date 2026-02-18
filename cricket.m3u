@@ -1,5 +1,5 @@
 #EXTM3U
-# Updated: 19 Feb 2026 | 02:03:10 AM
+# Updated: 19 Feb 2026 | 02:07:59 AM
 
 #EXTINF:-1 tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="Cricket",T20 - Hindi
 #KODIPROP:inputstream.adaptive.license_type=clearkey
@@ -12,28 +12,4 @@ https://otte.live.fly.ww.aiv-cdn.net/sin-nitro/live/dash/enc/xhryamnmfi/out/v1/b
 #KODIPROP:inputstream.adaptive.license_key=ed76c18710d621a87c89dedc7c13019f:7241c82fe48525a9dc6be6d7bb86611f
 #EXTHTTP:{"User-Agent":"plaYtv/7.1.3 (Linux;Android 13) ygx/824.1 ExoPlayerLib/824.0","Connection":"keep-alive"}
 https://otte.live.fly.ww.aiv-cdn.net/sin-nitro/live/dash/enc/hw7wthhsys/out/v1/51e65f7749fe4cc78f6c108fa09ff29c/cenc.mpd?
-
-#EXTINF:-1 tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="Cricket",T20 - Hindi
-#EXTHTTP:{"User-Agent":"plaYtv/7.1.3 (Linux;Android 13) ygx/824.1 ExoPlayerLib/824.0","Connection":"keep-alive"}
-https://game.denver69.fun/Series/jh-hin.m3u8
-
-#EXTINF:-1 tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="Cricket",T20 - Tamil
-#EXTHTTP:{"User-Agent":"plaYtv/7.1.3 (Linux;Android 13) ygx/824.1 ExoPlayerLib/824.0","Connection":"keep-alive"}
-https://game.denver69.fun/Series/jh-tam.m3u8
-
-#EXTINF:-1 tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="Cricket",T20 - Telugu
-#EXTHTTP:{"User-Agent":"plaYtv/7.1.3 (Linux;Android 13) ygx/824.1 ExoPlayerLib/824.0","Connection":"keep-alive"}
-https://game.denver69.fun/Series/jh-tel.m3u8
-
-#EXTINF:-1 tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="Cricket",T20 - Kannada
-#EXTHTTP:{"User-Agent":"plaYtv/7.1.3 (Linux;Android 13) ygx/824.1 ExoPlayerLib/824.0","Connection":"keep-alive"}
-https://game.denver69.fun/Series/jh-kan.m3u8
-
-#EXTINF:-1 tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="Cricket",T20 - Bhojpuri
-#EXTHTTP:{"User-Agent":"plaYtv/7.1.3 (Linux;Android 13) ygx/824.1 ExoPlayerLib/824.0","Connection":"keep-alive"}
-https://game.denver69.fun/Series/jh-bhoj.m3u8
-
-#EXTINF:-1 tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="Cricket",T20 - Haryanvi
-#EXTHTTP:{"User-Agent":"plaYtv/7.1.3 (Linux;Android 13) ygx/824.1 ExoPlayerLib/824.0","Connection":"keep-alive"}
-https://game.denver69.fun/Series/jh-har.m3u8
 
