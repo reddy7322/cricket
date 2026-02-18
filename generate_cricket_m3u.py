@@ -26,19 +26,24 @@ def send_telegram_msg(message):
     payload = {"chat_id": CHAT_ID, "text": message, "parse_mode": "HTML"}
     try:
         requests.post(url, json=payload, timeout=10)
-    except Exception as e:
-        print(f"❌ Telegram Error: {e}")
+    except Exception:
+        pass
 
 def is_working(url):
-    """Verifies if the stream is active without downloading the whole file."""
+    """
+    Improved check. Many working streams return 403 or 405 to bots.
+    We only skip if the connection is totally refused or 404.
+    """
     try:
-        response = requests.get(url, timeout=7, headers={"User-Agent": DEFAULT_UA}, stream=True)
-        return response.status_code == 200
+        # We use a GET request with a small chunk size to see if the server responds at all
+        response = requests.get(url, timeout=5, headers={"User-Agent": DEFAULT_UA}, stream=True)
+        # 200 is perfect, 403/405 often means the stream is live but protected
+        return response.status_code in [200, 403, 405]
     except:
         return False
 
 def main():
-    print(">>> Starting Cricket Playlist Update...")
+    print(">>> Starting Generator (Fixed Fetching Logic)")
     all_streams = []
     seen_urls = set()
 
@@ -48,9 +53,11 @@ def main():
             r.raise_for_status()
             data = r.json()
             m_type = data.get("event", {}).get("match_type", "LIVE")
-            for s in data.get("streams", []):
+            streams = data.get("streams", [])
+            for s in streams:
                 s['m_label'] = m_type
                 all_streams.append(s)
+            print(f"✅ Loaded {len(streams)} streams from {url}")
         except Exception as e:
             print(f"❌ Source Error: {e}")
 
@@ -64,15 +71,17 @@ def main():
             if not url_raw:
                 continue
 
+            # Split the URL from the parameters
             parts = url_raw.split('|')
             base_url = parts[0]
 
-            # Remove duplicates
+            # Duplicate Check
             if base_url in seen_urls:
                 continue
 
-            # Validate working status
+            # Validate Stream (Using the new lenient check)
             if not is_working(base_url):
+                print(f"⚠️  Skipping likely dead stream: {s.get('language')}")
                 continue
 
             seen_urls.add(base_url)
@@ -92,23 +101,8 @@ def main():
             
             f.write(f'#EXTINF:-1 tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="Cricket",{name}\n')
 
-            drm = params.get("drmLicense") or params.get("license_key")
+            # Correctly identify DRM keys
+            drm = params.get("drmLicense") or params.get("license_key") or params.get("drm")
             if drm:
-                f.write("#KODIPROP:inputstream.adaptive.license_type=clearkey\n")
-                f.write(f"#KODIPROP:inputstream.adaptive.license_key={drm}\n")
-
-            f.write(f'#EXTHTTP:{{"User-Agent":"{DEFAULT_UA}"}}\n')
-            f.write(f"{base_url}\n\n")
-            working_count += 1
-
-    # Send Notification to @TvtCricBot
-    msg = (f"🏏 <b>Cricket Playlist Updated!</b>\n\n"
-           f"✅ <b>{working_count}</b> Streams Verified\n"
-           f"🕒 Time: <code>{ist_timestamp()}</code>\n"
-           f"📂 Status: All working & Unique")
-    send_telegram_msg(msg)
-    print(f">>> Success! {working_count} streams added.")
-
-if __name__ == "__main__":
-    main()
-    
+                f.write("#KODIPROP:inputstream.adaptive.license_type
+                        
