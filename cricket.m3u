@@ -1,35 +1,3 @@
 #EXTM3U
-# Updated: 21 Feb 2026 | 05:31:12 AM
-
-#EXTINF:-1 tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="Cricket",T20 - Hindi
-#EXTHTTP:{"User-Agent":"plaYtv/7.1.3 (Linux;Android 13) ygx/824.1 ExoPlayerLib/824.0","Connection":"keep-alive","Origin":"https://jiotv.com/"}
-https://game.denver69.fun/Series/jh-hin.m3u8
-
-#EXTINF:-1 tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="Cricket",T20 - English
-#EXTHTTP:{"User-Agent":"plaYtv/7.1.3 (Linux;Android 13) ygx/824.1 ExoPlayerLib/824.0","Connection":"keep-alive","Origin":"https://jiotv.com/"}
-https://game.denver69.fun/Series/jh-eng.m3u8
-
-#EXTINF:-1 tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="Cricket",T20 - Tamil
-#EXTHTTP:{"User-Agent":"plaYtv/7.1.3 (Linux;Android 13) ygx/824.1 ExoPlayerLib/824.0","Connection":"keep-alive","Origin":"https://jiotv.com/"}
-https://game.denver69.fun/Series/jh-tam.m3u8
-
-#EXTINF:-1 tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="Cricket",T20 - Malayalam
-#EXTHTTP:{"User-Agent":"plaYtv/7.1.3 (Linux;Android 13) ygx/824.1 ExoPlayerLib/824.0","Connection":"keep-alive","Origin":"https://jiotv.com/"}
-https://game.denver69.fun/Series/jh-mal.m3u8
-
-#EXTINF:-1 tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="Cricket",T20 - Telugu
-#EXTHTTP:{"User-Agent":"plaYtv/7.1.3 (Linux;Android 13) ygx/824.1 ExoPlayerLib/824.0","Connection":"keep-alive","Origin":"https://jiotv.com/"}
-https://game.denver69.fun/Series/jh-tel.m3u8
-
-#EXTINF:-1 tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="Cricket",T20 - Kannada
-#EXTHTTP:{"User-Agent":"plaYtv/7.1.3 (Linux;Android 13) ygx/824.1 ExoPlayerLib/824.0","Connection":"keep-alive","Origin":"https://jiotv.com/"}
-https://game.denver69.fun/Series/jh-kan.m3u8
-
-#EXTINF:-1 tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="Cricket",T20 - Bhojpuri
-#EXTHTTP:{"User-Agent":"plaYtv/7.1.3 (Linux;Android 13) ygx/824.1 ExoPlayerLib/824.0","Connection":"keep-alive","Origin":"https://jiotv.com/"}
-https://game.denver69.fun/Series/jh-bhoj.m3u8
-
-#EXTINF:-1 tvg-logo="https://tvtelugu.pages.dev/logo/TV%20Telugu%20Cricket.png" group-title="Cricket",T20 - Haryanvi
-#EXTHTTP:{"User-Agent":"plaYtv/7.1.3 (Linux;Android 13) ygx/824.1 ExoPlayerLib/824.0","Connection":"keep-alive","Origin":"https://jiotv.com/"}
-https://game.denver69.fun/Series/jh-har.m3u8
+# Updated: 21 Feb 2026 | 08:18:30 AM
 
